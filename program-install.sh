@@ -27,6 +27,18 @@ sudo apt-get install -y \
 
 sudo apt-get install -y tldr
 
+# setup ZSH
+sudo chsh -s /usr/bin/zsh
+# add oh-my-zsh
+sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+# add powerline fonts
+sudo apt install fonts-powerline
+# add spaceship prompt
+git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+# copy zshrc with appropriate settings
+cp ./.zshrc ~/.zshrc
+
 # Google repo
 curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 chmod a+x ~/bin/repo
@@ -39,11 +51,11 @@ if has_arg "writing"; then
         pandoc
 fi
 
-if has_arg "bash"; then
-    # Map /bin/sh to /bin/bash
+if has_arg "zsh"; then
+    # Map /bin/sh to /bin/zsh
     if [[ ! -f /bin/sh.bak ]]; then
         sudo mv /bin/sh /bin/sh.bak
-        sudo ln -s /bin/bash /bin/sh
+        sudo ln -s /usr/bin/zsh /bin/sh
     fi
 fi
 

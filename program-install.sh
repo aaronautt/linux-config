@@ -14,8 +14,7 @@ fi
 
 # Basic tools
 sudo apt-get install -y \
-    vim \
-    git \
+    zsh \
     tmux \
     lynx \
     gcc \

@@ -23,7 +23,9 @@ sudo apt-get install -y \
     net-tools \
     htop \
     pdfgrep \
-    screen
+    minicom \
+    autoconf \
+    texinfo
 
 sudo apt-get install -y tldr
 
@@ -38,6 +40,43 @@ git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/theme
 ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 # copy zshrc with appropriate settings
 cp ./.zshrc ~/.zshrc
+
+# install emacs
+# install essential build tools
+sudo apt-get install build-essential -y
+# get all dependencies of a previous emacs version
+sudo apt-get build-dep emacs -y
+
+sudo apt-get install -y \
+    libgtk-3-dev \
+    libxpm-dev \
+    gnutls-dev \
+    libncurses5-dev \
+    libx11-dev \
+    libxpm-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libgif-dev \
+    libtiff-dev \
+    libgtk2.0-dev
+
+# Get source
+git clone https://github.com/emacs-mirror/emacs.git
+# Go to source and build
+cd emacs
+./autogen.sh
+./configure
+make -j4
+# Install
+sudo make install
+# remove source
+sudo rm -rf ~/emacs
+
+#install spacemacs
+mv ~/.emacs.d ~/.emacs.d.bak
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+
+echo "don't forget to clone the spacemacs config."
 
 # Google repo
 curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo

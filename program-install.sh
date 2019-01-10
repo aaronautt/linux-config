@@ -26,7 +26,8 @@ sudo apt-get install -y \
     minicom \
     autoconf \
     texinfo \
-    meld
+    meld \
+    silversearcher-ag
 
 sudo apt-get install -y tldr
 

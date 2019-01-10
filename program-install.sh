@@ -25,7 +25,8 @@ sudo apt-get install -y \
     pdfgrep \
     minicom \
     autoconf \
-    texinfo
+    texinfo \
+    meld
 
 sudo apt-get install -y tldr
 
@@ -38,8 +39,6 @@ sudo apt install fonts-powerline
 # add spaceship prompt
 git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
 ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
-# copy zshrc with appropriate settings
-cp ./.zshrc ~/.zshrc
 
 # install emacs
 # install essential build tools

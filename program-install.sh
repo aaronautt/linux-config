@@ -31,8 +31,6 @@ sudo apt-get install -y \
 
 sudo apt-get install -y tldr
 
-# setup ZSH
-sudo chsh -s /usr/bin/zsh
 # add oh-my-zsh
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 # add powerline fonts
@@ -77,10 +75,6 @@ mv ~/.emacs.d ~/.emacs.d.bak
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 
 echo "don't forget to clone the spacemacs config."
-
-# Google repo
-curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
-chmod a+x ~/bin/repo
 
 if has_arg "writing"; then
     sudo apt-get install -y \
@@ -159,3 +153,5 @@ if has_arg "pigdin"; then
     sudo apt update && sudo apt install purple-facebook
 fi
 
+# change shell to zsh after everything else has executed
+sudo chsh -s /usr/bin/zsh

@@ -49,24 +49,29 @@ sudo apt-get install -y \
     libpng-dev \
     libgif-dev \
     libtiff-dev \
-    libgtk2.0-dev
+    libgtk2.0-dev \
+    libxaw7-dev	
 
-# Get source
-git clone https://github.com/emacs-mirror/emacs.git
-# Go to source and build
-cd emacs
-./autogen.sh
-./configure
-make -j4
-# Install
-sudo make install
-cd ../
-# remove source
-sudo rm -rf ~/emacs
+if [ ! -f /usr/local/bin/emacs ]; then
+	# Get source
+	git clone https://github.com/emacs-mirror/emacs.git
+	# Go to source and build
+	cd emacs
+	./autogen.sh
+	./configure --with-x-toolkit=lucid
+	make -j4
+	# Install
+	sudo make install
+	cd ../
+	# remove source
+	sudo rm -rf ~/linux-config/emacs
+fi
 
 #install spacemacs
-mv ~/.emacs.d ~/.emacs.d.bak
-git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+if [ ! -e ~/.emacs.d/spacemacs.mak ]; then
+	mv ~/.emacs.d ~/.emacs.d.bak
+	git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+fi
 
 echo "don't forget to clone the spacemacs config."
 
@@ -149,13 +154,16 @@ fi
 
 ./file-install.sh
 
-# add oh-my-zsh
-sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-# add powerline fonts
-sudo apt install fonts-powerline
-# add spaceship prompt
-git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
-ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+# check if we are in WSL, and skip ZSH install if we are
+if [[ "$(< /proc/sys/kernel/osrelease)" == *Microsoft ]]; then
+	# add oh-my-zsh
+	sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+	# add powerline fonts
+	sudo apt install fonts-powerline
+	# add spaceship prompt
+	git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+	ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
-# change shell to zsh after everything else has executed
-chsh -s /usr/bin/zsh
+	# change shell to zsh after everything else has executed
+	chsh -s /usr/bin/zsh
+fi

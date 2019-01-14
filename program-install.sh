@@ -52,7 +52,7 @@ sudo apt-get install -y \
     libgtk2.0-dev \
     libxaw7-dev
 
-if [ ! -f /usr/local/bin/emacs ]; then
+if [ ! -e /usr/local/bin/emacs ]; then
   # Get source
   git clone https://github.com/emacs-mirror/emacs.git -b emacs-26.1.91
   # Go to source and build
@@ -91,14 +91,17 @@ if has_arg "zsh"; then
     fi
 fi
 
+# Bat (https://github.com/sharkdp/bat)
 if has_arg "bat"; then
-    echo "Download latest amd64 package from opened page and replace the copy"
-    echo "in system_files/"
-    firefox https://github.com/sharkdp/bat/releases
+    curl -s https://api.github.com/repos/sharkdp/bat/releases/latest \
+        | grep "browser_download_url.*amd64.deb" \
+        | cut -d : -f 2,3 \
+        | tr -d \" \
+        | wget -qi -
+    sudo dpkg -i ./system_files/bat_*amd64.deb
+    rm bat*
 fi
 
-# Bat (https://github.com/sharkdp/bat)
-sudo dpkg -i ./system_files/bat*.deb
 
 if has_arg "docker"; then
     # Docker
@@ -152,10 +155,8 @@ if has_arg "pigdin"; then
     sudo apt update && sudo apt install purple-facebook
 fi
 
-./file-install.sh
-
 # check if we are in WSL, and skip ZSH install if we are
-if [[ "$(< /proc/sys/kernel/osrelease)" == *Microsoft ]]; then
+if [[ "$(< /proc/sys/kernel/osrelease)" != *Microsoft ]]; then
   # add oh-my-zsh
   sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
   # add powerline fonts
@@ -167,3 +168,5 @@ if [[ "$(< /proc/sys/kernel/osrelease)" == *Microsoft ]]; then
   # change shell to zsh after everything else has executed
   chsh -s /usr/bin/zsh
 fi
+
+./file-install.sh

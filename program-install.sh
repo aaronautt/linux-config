@@ -54,7 +54,7 @@ sudo apt-get install -y \
 
 if [ ! -f /usr/local/bin/emacs ]; then
   # Get source
-  git clone https://github.com/emacs-mirror/emacs.git
+  git clone https://github.com/emacs-mirror/emacs.git -b emacs-26.1.91
   # Go to source and build
   cd emacs
   ./autogen.sh

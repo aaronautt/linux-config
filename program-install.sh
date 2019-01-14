@@ -31,13 +31,6 @@ sudo apt-get install -y \
 
 sudo apt-get install -y tldr
 
-# add oh-my-zsh
-sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-# add powerline fonts
-sudo apt install fonts-powerline
-# add spaceship prompt
-git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
-ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
 # install emacs
 # install essential build tools
@@ -67,6 +60,7 @@ cd emacs
 make -j4
 # Install
 sudo make install
+cd ../
 # remove source
 sudo rm -rf ~/emacs
 
@@ -99,7 +93,7 @@ if has_arg "bat"; then
 fi
 
 # Bat (https://github.com/sharkdp/bat)
-sudo dpkg -i system_files/bat*.deb
+sudo dpkg -i ./system_files/bat*.deb
 
 if has_arg "docker"; then
     # Docker
@@ -153,5 +147,15 @@ if has_arg "pigdin"; then
     sudo apt update && sudo apt install purple-facebook
 fi
 
+./file-install.sh
+
+# add oh-my-zsh
+sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+# add powerline fonts
+sudo apt install fonts-powerline
+# add spaceship prompt
+git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+
 # change shell to zsh after everything else has executed
-sudo chsh -s /usr/bin/zsh
+chsh -s /usr/bin/zsh

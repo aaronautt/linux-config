@@ -68,7 +68,7 @@ if [ ! -e /usr/local/bin/emacs ]; then
 fi
 
 #install spacemacs
-if [ ! -e ~/.emacs.d/spacemacs.mak ]; then
+if [ ! -e ~/.emacs.d/spacemacs.mk ]; then
   mv ~/.emacs.d ~/.emacs.d.bak
   git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 fi
@@ -98,7 +98,7 @@ if has_arg "bat"; then
         | cut -d : -f 2,3 \
         | tr -d \" \
         | wget -qi -
-    sudo dpkg -i ./system_files/bat_*amd64.deb
+    sudo dpkg -i ./bat_*amd64.deb
     rm bat*
 fi
 
@@ -135,6 +135,7 @@ if has_arg "enpass"; then
     wget -O - https://dl.sinew.in/keys/enpass-linux.key | sudo apt-key add -
     sudo apt-get update
     sudo apt-get install -y enpass
+
 fi
 
 if has_arg "signal"; then

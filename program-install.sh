@@ -98,7 +98,7 @@ if has_arg "bat"; then
         | cut -d : -f 2,3 \
         | tr -d \" \
         | wget -qi -
-    sudo dpkg -i ./system_files/bat_*amd64.deb
+    sudo dpkg -i bat_*amd64.deb
     rm bat*
 fi
 

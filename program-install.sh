@@ -27,7 +27,9 @@ sudo apt-get install -y \
     autoconf \
     texinfo \
     meld \
-    silversearcher-ag
+    silversearcher-ag \
+    make \
+    cmake 
 
 sudo apt-get install -y tldr
 
@@ -75,6 +77,16 @@ fi
 
 echo "don't forget to clone the spacemacs config."
 
+# build and install ccls, don't remove the ccls release dir after this
+if has_arg "lsp"; then
+    git clone --depth=1 --recursive https://github.com/MaskRay/ccls
+    cd ccls
+    cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release
+    cmake --build Release
+    cmake --build Release --target install
+fi
+
+
 if has_arg "writing"; then
     sudo apt-get install -y \
         aspell \
@@ -102,6 +114,23 @@ if has_arg "bat"; then
     rm bat*
 fi
 
+# FiraCode font used in emacs
+curl -s https://api.github.com/repos/tonsky/FiraCode/releases/latest \
+    | grep "browser_download_url.*.zip" \
+    | cut -d : -f 2,3 \
+    | tr -d \" \
+    | wget -qi -
+if [ ! -d ~/.fonts ]; then
+    mkdir ~/.fonts
+fi
+mkdir FC
+cd FC
+unzip ../*.zip
+cp ttf/*.ttf ~/.fonts
+cd ../
+sudo rm -rf FC
+rm FiraCode*.zip
+fc-cache -f -v
 
 if has_arg "docker"; then
     # Docker

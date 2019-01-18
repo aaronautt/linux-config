@@ -68,7 +68,7 @@ if [ ! -e /usr/local/bin/emacs ]; then
 fi
 
 #install spacemacs
-if [ ! -e ~/.emacs.d/spacemacs.mak ]; then
+if [ ! -e ~/.emacs.d/spacemacs.mk ]; then
   mv ~/.emacs.d ~/.emacs.d.bak
   git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 fi
